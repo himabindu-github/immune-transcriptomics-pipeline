@@ -1,0 +1,36 @@
+# Paths
+data_dir: "data/raw"
+trimmed_dir: "data/trimmed"
+results_dir: "results"
+reference_dir: "reference"
+
+# Samples
+samplesheet: "config/samplesheet.csv"
+
+# Reference files
+reference_genome: "reference/genome.fa"
+annotation_gtf: "reference/annotation.gtf"
+bwa_index: "reference/genome.fa.bwa"
+
+# Trimming parameters
+trim_quality: 20
+trim_minlen: 30
+
+# Alignment parameters
+aligner: "hisat2"
+threads: 8
+
+# Counting
+featurecounts_options: "-t exon -g gene_id"
+
+# Conda environments
+conda_envs:
+  fastqc: "envs/fastqc.yaml"
+  trimmomatic: "envs/trimmomatic.yaml"
+  hisat2: "envs/hisat2.yaml"
+  featurecounts: "envs/featurecounts.yaml"
+
+# Reporting
+qc_dir: "results/qc"
+report_dir: "results/reports"
+multiqc_config: "config/multiqc_config.yaml"

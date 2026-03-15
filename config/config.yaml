@@ -1,0 +1,10 @@
+samples:
+  - SRR1550990
+
+reference:
+  genome: reference/GRCh38_chr22.fa
+  gtf: reference/gencode_chr22.gtf
+
+threads:
+  hisat2: 2
+  featurecounts: 2

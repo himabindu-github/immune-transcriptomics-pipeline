@@ -1,0 +1,71 @@
+# ===============================
+
+# Bioinformatics / Snakemake repo
+
+# ===============================
+
+# ---- Raw sequencing data ----
+
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+
+# ---- Alignment files ----
+
+*.bam
+*.sam
+*.cram
+*.bai
+
+# ---- Variant files ----
+
+*.vcf
+*.vcf.gz
+*.bcf
+
+# ---- Pipeline outputs ----
+
+results/
+logs/
+
+# ---- Temporary workflow files ----
+
+.snakemake/
+tmp/
+temp/
+
+# ---- Word temporary files ----
+
+~$*.docx
+
+# ---- Project planning documents ----
+
+the_idea/
+
+# ---- Python ----
+
+**pycache**/
+*.pyc
+*.pyo
+
+# ---- Conda environments ----
+
+.env
+env/
+venv/
+
+# ---- OS files ----
+
+.DS_Store
+Thumbs.db
+
+# ---- Editors / IDE ----
+
+.vscode/
+.idea/
+
+# ---- Misc ----
+
+*.log
+

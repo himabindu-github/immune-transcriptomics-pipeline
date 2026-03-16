@@ -19,6 +19,7 @@ fasterq.tmp.*
 *.bai
 *.ht2
 *.tar.gz
+*.gtf.gz
 # ---- Variant files ----
 
 *.vcf

@@ -1,7 +1,23 @@
-configfile: "../config/config.yaml"
+configfile: "config/config.yaml"
+
+
+import pandas as pd
+
+samples = pd.read_csv(config["samples"], sep="\t")
+SAMPLES = samples["sample"].tolist()
+
+
 
 include: "rules/download.smk"
 include: "rules/fastqc.smk"
 include: "rules/align.smk"
 include: "rules/counts.smk"
 include: "rules/deseq2.smk"
+
+rule all:
+    input:
+       expand("results/qc/{sample}_1_fastqc.html", sample=SAMPLES),
+       expand("results/qc/{sample}_2_fastqc.html", sample=SAMPLES),
+       expand("results/alignment/{sample}.bam", sample=SAMPLES),
+       expand("results/alignment/{sample}.bam.bai", sample=SAMPLES),
+       expand("results/qc/{sample}_flagstat.txt", sample=SAMPLES)

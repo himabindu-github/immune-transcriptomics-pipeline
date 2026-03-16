@@ -10,14 +10,15 @@
 *.fastq.gz
 *.fq
 *.fq.gz
-
+fasterq.tmp.*
 # ---- Alignment files ----
 
 *.bam
 *.sam
 *.cram
 *.bai
-
+*.ht2
+*.tar.gz
 # ---- Variant files ----
 
 *.vcf
@@ -69,3 +70,7 @@ Thumbs.db
 
 *.log
 
+# genome index
+reference/genome_index/
+
+snakemake-execution.pdf

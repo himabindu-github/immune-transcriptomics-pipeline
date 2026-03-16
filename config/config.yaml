@@ -1,10 +1,12 @@
 samples:
-  - SRR1550990
+   "config/sample_metadata.tsv"
 
 reference:
   genome: reference/GRCh38_chr22.fa
   gtf: reference/gencode_chr22.gtf
 
 threads:
+  download: 2
+  fastqc: 2
   hisat2: 2
   featurecounts: 2

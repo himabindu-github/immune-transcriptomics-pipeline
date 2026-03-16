@@ -20,4 +20,5 @@ rule all:
        expand("results/qc/{sample}_2_fastqc.html", sample=SAMPLES),
        expand("results/alignment/{sample}.bam", sample=SAMPLES),
        expand("results/alignment/{sample}.bam.bai", sample=SAMPLES),
-       expand("results/qc/{sample}_flagstat.txt", sample=SAMPLES)
+       expand("results/qc/{sample}_flagstat.txt", sample=SAMPLES),
+       expand("results/counts/{sample}_counts.txt", sample=SAMPLES)

@@ -1,0 +1,6 @@
+"","ALS","Healthy_Control","MS_posttreatment","MS_pretreatment","Sepsis"
+"Healthy_Control",1,NA,NA,NA,NA
+"MS_posttreatment",1,1,NA,NA,NA
+"MS_pretreatment",1,1,1,NA,NA
+"Sepsis",1,1,1,1,NA
+"Type1_Diabetes",1,1,1,1,1

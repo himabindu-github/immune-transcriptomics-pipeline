@@ -1,0 +1,20 @@
+samples:
+   "config/sample_metadata.tsv"
+
+reference:
+  genome: reference/GRCh38_chr22.fa
+  gtf: reference/gencode_chr22.gtf
+
+threads:
+  download: 2
+  fastqc: 2
+  hisat2: 2
+  featurecounts: 2
+
+comparisons:
+  - [ALS, Healthy_Control]
+  - [Type1_Diabetes, Healthy_Control]
+  - [Sepsis, Healthy_Control]
+  - [MS_pretreatment, Healthy_Control]
+  - [MS_posttreatment, Healthy_Control]
+  - [MS_pretreatment, MS_posttreatment]

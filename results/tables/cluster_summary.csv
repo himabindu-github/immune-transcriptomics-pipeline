@@ -1,0 +1,16 @@
+"cluster","disease_status","n"
+"1","ALS",1
+"1","Healthy_Control",2
+"1","MS_posttreatment",2
+"1","MS_pretreatment",2
+"1","Sepsis",1
+"1","Type1_Diabetes",1
+"2","ALS",1
+"2","Sepsis",1
+"2","Type1_Diabetes",2
+"3","ALS",1
+"3","Healthy_Control",2
+"3","MS_posttreatment",1
+"3","MS_pretreatment",1
+"3","Sepsis",1
+"3","Type1_Diabetes",1

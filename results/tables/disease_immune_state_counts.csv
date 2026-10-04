@@ -1,0 +1,16 @@
+"disease_status","immune_state","n"
+"ALS","Activated-Exhausted",1
+"ALS","Effector-Inflammatory",1
+"ALS","Quiescent-Regulated",1
+"Healthy_Control","Effector-Inflammatory",2
+"Healthy_Control","Quiescent-Regulated",2
+"MS_posttreatment","Effector-Inflammatory",1
+"MS_posttreatment","Quiescent-Regulated",2
+"MS_pretreatment","Effector-Inflammatory",1
+"MS_pretreatment","Quiescent-Regulated",2
+"Sepsis","Activated-Exhausted",1
+"Sepsis","Effector-Inflammatory",1
+"Sepsis","Quiescent-Regulated",1
+"Type1_Diabetes","Activated-Exhausted",2
+"Type1_Diabetes","Effector-Inflammatory",1
+"Type1_Diabetes","Quiescent-Regulated",1

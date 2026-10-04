@@ -1,0 +1,15 @@
+Kruskal-Wallis Test - Activation
+
+	Kruskal-Wallis rank sum test
+
+data:  activation by disease_status
+Kruskal-Wallis chi-squared = 2.4238, df = 5, p-value = 0.7879
+
+
+Kruskal-Wallis Test - Exhaustion
+
+	Kruskal-Wallis rank sum test
+
+data:  exhaustion by disease_status
+Kruskal-Wallis chi-squared = 2.0643, df = 5, p-value = 0.8402
+

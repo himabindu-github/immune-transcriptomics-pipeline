@@ -1,0 +1,14 @@
+channels:
+   - bioconda
+   - conda-forge
+
+dependencies:
+   - bioconductor-deseq2
+   - r-base
+   - r-ggplot2
+   - r-pheatmap
+   - r-dplyr
+   - bioconductor-apeglm
+   - bioconductor-org.hs.eg.db
+   - bioconductor-annotationdbi
+   - bioconductor-clusterprofiler

@@ -1,0 +1,31 @@
+# raw sequencing data and large reference files — never commit
+data/raw/*.fastq.gz
+reference/genome_index/
+reference/*.gtf.gz
+
+# alignment intermediates
+results/alignment/*.bam
+results/alignment/*.sam
+
+# snakemake run artifacts
+logs/
+.snakemake/
+
+# R session junk
+.Rhistory
+.RData
+Rplots.pdf
+
+# OS/editor junk
+.DS_Store
+__MACOSX/
+*.swp
+
+# planning docs / word docs — not tracked for now
+docs/
+*.docx
+snakemake-execution.pdf
+the-project-outline.pdf
+
+# superseded scripts / unverified figures kept locally for reference, not tracked
+archive/

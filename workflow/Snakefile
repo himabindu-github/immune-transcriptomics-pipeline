@@ -1,0 +1,178 @@
+configfile: "config/config.yaml"
+
+
+import pandas as pd
+
+samples = pd.read_csv(config["samples"], sep="\t")
+SAMPLES = samples["sample"].tolist()
+
+TEST_SAMPLE = ["SRR1550990"]
+
+COMPARISONS = config["comparisons"]
+
+CASES = [c[0] for c in COMPARISONS]
+CONTROLS = [c[1] for c in COMPARISONS]
+
+include: "rules/download.smk"
+include: "rules/fastqc.smk"
+include: "rules/align.smk"
+include: "rules/counts.smk"
+include: "rules/deseq2.smk"
+include: "rules/deseq2_contrast.smk"
+include: "rules/volcano_plot.smk"
+include: "rules/heatmap.smk"
+include: "rules/gene_var.smk"
+include: "rules/de_filter.smk"
+include: "rules/clustering.smk"
+include: "rules/qc_contamination.smk"
+include: "rules/enrichment.smk"
+include: "rules/program_scoring.smk"
+include: "rules/program_summary.smk"
+include: "rules/program_heatmap.smk"
+include: "rules/program_pca.smk"
+include: "rules/program_differential.smk"
+include: "rules/program_boxplot.smk"
+include: "rules/disease_signatures.smk"
+include: "rules/compute_immune_scores.smk"
+include: "rules/run_gsva.smk"
+include: "rules/plot_immune_states_gsva.smk"
+include: "rules/program_correlation.smk"
+include: "rules/cluster_immune_states.smk"
+include: "rules/immune_cluster_analysis.smk"
+include: "rules/immune_state_space.smk"
+include: "rules/immune_state_2d_plot.smk"
+#include: "rules/immune_state_3d_plot.smk"
+include: "rules/plot_immune_state_2d.smk"
+include: "rules/cluster_state_summary.smk"
+include: "rules/sample_immune_states.smk"
+include: "rules/disease_immune_composition.smk"
+include: "rules/final_immune_landscape.smk"
+
+
+
+rule all:
+    input:
+       # QC
+       expand("results/qc/{sample}_1_fastqc.html", sample=TEST_SAMPLE),
+       expand("results/qc/{sample}_2_fastqc.html", sample=TEST_SAMPLE),
+       
+       # alignment
+       expand("results/alignment/{sample}.bam", sample=TEST_SAMPLE),
+       expand("results/alignment/{sample}.bam.bai", sample=TEST_SAMPLE),
+       expand("results/qc/{sample}_flagstat.txt", sample=TEST_SAMPLE),
+
+       "results/qc/contamination_scores.csv",
+       "results/qc/neutrophil_contamination_check.png",
+       
+       # counts
+       expand("results/counts/{sample}_counts.txt", sample=TEST_SAMPLE),
+       
+       # deseq-GLOBAL outputs
+        "results/deseq2/dds.rds",
+        "results/deseq2/vst_matrix.csv",
+        "results/deseq2/global_PCA_plot.pdf",
+      
+       # deseq-contrast outputs
+       expand("results/deseq2/{case}_vs_{control}.csv",
+             zip, case=CASES, control=CONTROLS),
+
+
+       # volcano plots
+       expand("results/deseq2/{case}_vs_{control}_volcano.png",
+               zip, case=CASES, control=CONTROLS),       
+       
+
+       # heatmaps
+       expand("results/deseq2/{case}_vs_{control}_heatmap.png",
+               zip, case=CASES, control=CONTROLS),
+       
+
+       # gene variability
+        "results/tables/genes_var.txt",
+
+        expand("results/tables/{case}_vs_{control}_genes_var_de.txt",
+                zip, case=CASES, control=CONTROLS),
+        expand("results/tables/{case}_vs_{control}_de_genes.txt",
+                zip, case=CASES, control=CONTROLS),
+        #"results/tables/genes_var_de.txt"
+
+
+        # clustering
+        "results/tables/gene_clusters.csv",
+        "results/figures/clustering/gene_cluster_heatmap.png",
+
+        # enrichment
+        expand("results/enrichment/cluster_{i}.csv", i=[1,2,3,4,5,6]),
+
+        # program scoring
+        "results/tables/program_scores.csv",
+
+        # program summary
+        "results/tables/program_summary.csv",
+
+        # program heatmap
+        "results/figures/gsva/program_heatmap.png",
+
+        # program pca
+        "results/figures/gsva/program_pca.png",
+        "results/tables/program_pca_loadings.csv",
+
+        # program differential
+        "results/tables/program_differential.csv",
+
+        # program boxplots
+        "results/figures/gsva/program_boxplots.png",
+
+        # disease signatures
+        "results/tables/disease_signatures.csv",
+
+        # immune state scoring
+        "results/tables/immune_scores.csv",
+
+        # gsva
+        "results/tables/gsva_scores.csv",
+
+        # plot immune states
+        "results/figures/gsva/activation_boxplot.png",
+        "results/figures/gsva/exhaustion_boxplot.png",
+        "results/figures/immune_states/immune_state_scatter.png",
+        "results/figures/immune_states/immune_state_distribution.png",
+
+        # stats
+        "results/stats/immune_stats_summary.txt",
+        "results/stats/pairwise_activation.csv",
+        "results/stats/pairwise_exhaustion.csv",
+
+        # gsva program correlation
+        "results/tables/program_correlation.csv",
+        "results/figures/gsva/program_correlation_heatmap.png",
+
+        # gsva based clustering of immune states
+        "results/tables/immune_clusters.csv",
+        "results/figures/immune_states/immune_clusters_heatmap.png",
+
+        # immune cluster analysis
+        "results/tables/cluster_summary.csv",
+        "results/figures/immune_states/cluster_composition.png",
+        "results/figures/gsva/cluster_program_boxplots.png",
+
+        # immune state space
+        "results/tables/immune_state_space.csv",
+        "results/figures/immune_states/immune_state_2d.png",
+        "results/figures/immune_states/immune_state_2d_clusters.png",
+
+        # cluster state summary
+        "results/tables/cluster_state_summary.csv",
+        "results/figures/immune_states/cluster_state_heatmap.png",
+
+        # sample immune states
+        "results/tables/sample_immune_states.csv",
+
+        # disease immune composition
+        "results/figures/immune_states/disease_immune_state_composition.png",
+        "results/tables/disease_immune_state_counts.csv",
+      
+        # final immune landscape
+        "results/figures/immune_states/final_immune_landscape.png"
+
+

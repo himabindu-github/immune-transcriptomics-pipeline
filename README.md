@@ -4,7 +4,7 @@ A Snakemake pipeline analyzing CD8 T cell RNA-seq across four unrelated diseases
 
 ## Aim
 
-Reanalyze CD8-sorted RNA-seq from GEO (GSE60424) — healthy controls vs. ALS, Type 1 Diabetes, sepsis, and MS (sampled before and ~24h after first interferon-beta treatment) — to see whether CD8 gene expression differs by disease, and whether any consistent "immune state" pattern shows up across them.
+Reanalyze CD8-sorted RNA-seq from GEO (GSE60424), healthy controls vs. ALS, Type 1 Diabetes, sepsis, and MS (sampled before and ~24h after first interferon-beta treatment), to see whether CD8 gene expression differs by disease, and whether any consistent "immune state" pattern shows up across them.
 
 ## Data
 
@@ -15,11 +15,10 @@ Reanalyze CD8-sorted RNA-seq from GEO (GSE60424) — healthy controls vs. ALS, T
 1. Pulled the CD8 samples out of the full GEO dataset, verified against SRA.
 2. Checked data quality (`workflow/scripts/qc_contamination_check.R`) before trusting anything downstream.
 3. Ran DESeq2 for each disease vs. healthy, one shared model across all 20 samples.
-4. Scored samples on immune gene signatures (activation, exhaustion, cytotoxicity, interferon) two ways — a simple z-score average and GSVA.
+4. Scored samples on immune gene signatures (activation, exhaustion, cytotoxicity, interferon) two ways, a simple z-score average and GSVA.
 5. Clustered the top variable genes to find data-driven gene programs, and separately clustered samples into "immune states" based on their signature scores.
 
-The raw-read pipeline (FastQC → HISAT2 → featureCounts) was run on one sample only, to prove it works — not all 20, since GEO already provides processed counts and re-aligning 20 public samples wasn't worth the compute.
-
+The raw-read pipeline (FastQC → HISAT2 → featureCounts) was run on one sample only(not all 20), to prove it works, since GEO already provides processed counts.
 ## Results
 
 **Differential expression, each disease vs. healthy:**
@@ -35,15 +34,15 @@ The raw-read pipeline (FastQC → HISAT2 → featureCounts) was run on one sampl
 
 Sepsis is an outlier by 10x. That's explained by the next finding, not real disease biology.
 
-**One sample is driving a lot of this.** Checking neutrophil markers against T-cell markers flagged 2 of 3 sepsis samples as likely contaminated with neutrophils — probably real, since very sick patients can have unusual circulating neutrophils that slip through cell sorting. One sample in particular shows up as an extreme outlier in six separate places: the marker check, the global PCA (`results/deseq2/global_PCA_plot.pdf`, PC1=47% of variance), the Sepsis heatmap and volcano plot, unsupervised gene clustering (independently enriched for "myeloid leukocyte activation," p=5×10⁻¹⁴), and the program-score PCA. It also shows up directly in `program_heatmap.png`, where Sepsis is the most extreme group on exactly the two programs tied to this contamination — which is the figure that looks most "interesting" at first glance, and isn't, once you know why.
+**One sample is driving a lot of this.** Checking neutrophil markers against T-cell markers flagged 2 of 3 sepsis samples as likely contaminated with neutrophils, probably real, since very sick patients can have unusual circulating neutrophils that slip through cell sorting. One sample in particular shows up as an extreme outlier in six separate places: the marker check, the global PCA (`results/deseq2/global_PCA_plot.pdf`, PC1=47% of variance), the Sepsis heatmap and volcano plot, unsupervised gene clustering (independently enriched for "myeloid leukocyte activation," p=5×10⁻¹⁴), and the program-score PCA. It also shows up directly in `program_heatmap.png`, where Sepsis is the most extreme group on exactly the two programs tied to this contamination.
 
-**Activation and exhaustion scores don't differ significantly by disease** (p=0.79, p=0.84 — `activation_boxplot.png`, `exhaustion_boxplot.png`). Honest null result, not hidden.
+**Activation and exhaustion scores don't differ significantly by disease** (p=0.79, p=0.84 — `activation_boxplot.png`, `exhaustion_boxplot.png`).
 
-**Two signatures ("activation," "cytotoxic") turned out to share 80% of their genes**, which is why they correlate at r=0.97 — not independent biology, mostly the same genes twice.
+**Two signatures ("activation," "cytotoxic") turned out to share 80% of their genes**, which is why they correlate at r=0.97, not independent biology, mostly the same genes twice.
 
 **Sex-linked genes showed up in the ALS differential expression results**, not just in clustering where I'd already excluded them. Some of the "ALS" signal is probably a sex imbalance between the ALS and healthy sub-groups being compared.
 
-**The 3-cluster "immune state" grouping is internally consistent but not statistically tied to disease** — cross-tabulated against 6 disease groups, most cells have 0-2 samples, too sparse for any real test. Worth noting: the 3 Sepsis samples land in three different clusters, not together — the disease itself isn't a single immune state. An earlier draft of this analysis claimed immune state was "more fundamental than disease category." I don't think the data supports that, so I've dropped it.
+**The 3-cluster "immune state" grouping is internally consistent but not statistically tied to disease** — cross-tabulated against 6 disease groups, most cells have 0-2 samples, too sparse for any real test. Worth noting: the 3 Sepsis samples land in three different clusters, not together, the disease itself isn't a single immune state.
 
 ## Limitations
 
@@ -56,8 +55,8 @@ Sepsis is an outlier by 10x. That's explained by the next finding, not real dise
 
 ## Next steps
 
-- Rerun Sepsis excluding the contaminated sample (script written, not yet run)
-- Model the MS pre/post comparison as paired instead of independent (script written, not yet run)
+- Rerun Sepsis excluding the contaminated sample
+- Model the MS pre/post comparison as paired instead of independent 
 - Check whether an NK-cell signal found in gene clustering is a second contamination issue
 - Validate the sepsis-adjusted results against an independent dataset
 

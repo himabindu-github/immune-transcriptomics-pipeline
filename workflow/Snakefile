@@ -62,7 +62,7 @@ rule all:
        expand("results/qc/{sample}_flagstat.txt", sample=TEST_SAMPLE),
 
        "results/qc/contamination_scores.csv",
-       "results/qc/neutrophil_contamination_check.png",
+       "results/qc/qc_neutrophil_contamination_check.png",
        
        # counts
        expand("results/counts/{sample}_counts.txt", sample=TEST_SAMPLE),
